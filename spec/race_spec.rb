@@ -55,7 +55,7 @@ RSpec.describe Race do
     end
   end
 
-  describe "#winner" do
+  describe "#winner && #tie" do
     before(:each) do
       @election = Election.new("2024")
       @election.add_race(@presidential)
@@ -77,5 +77,14 @@ RSpec.describe Race do
       @presidential.close!
       expect(@presidential.winner).to eq(presidential_candidate_2)
     end
+
+    # it "can determine if theres a tie" do
+    #   presidential_candidate_1 = @presidential.register_candidate!({name: "Robert Gunnut", party: :republican})
+    #   presidential_candidate_2 = @presidential.register_candidate!({name: "Andy Leftwich", party: :democrat})
+    #   5.times { presidential_candidate_1.vote_for! }
+    #   5.times { presidential_candidate_2.vote_for! }
+    #   @presidential.close!
+    #   expect(@presidential.tie?).to eq(true)
+    # end
   end
 end
