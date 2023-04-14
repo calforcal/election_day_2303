@@ -18,20 +18,20 @@ RSpec.describe Race do
   end
 
   describe "#register_candidate! && candidates" do
-    before(:each) do
-      @candidate1 = @race.register_candidate!({name: "Diana D", party: :democrat})
-      @candidate2 = @race.register_candidate!({name: "Roberto R", party: :republican})
-
-    end
-
     it "can create && register candidates" do
-      expect(@candidate1.class).to eq(Candidate)
-      expect(@candidate1.name).to eq("Diana D")
-      expect(@candidate1.party).to eq(:democrat)
+      candidate1 = @race.register_candidate!({name: "Diana D", party: :democrat})
+      candidate2 = @race.register_candidate!({name: "Roberto R", party: :republican})
+
+      expect(candidate1.class).to eq(Candidate)
+      expect(candidate1.name).to eq("Diana D")
+      expect(candidate1.party).to eq(:democrat)
     end
 
     it "can list all the candidates in the race" do
-      expect(@race.candidates).to eq([@candidate1, @candidate2])
+      candidate1 = @race.register_candidate!({name: "Diana D", party: :democrat})
+      candidate2 = @race.register_candidate!({name: "Roberto R", party: :republican})
+      
+      expect(@race.candidates).to eq([candidate1, candidate2])
     end
   end
 end
