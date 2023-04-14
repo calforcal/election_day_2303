@@ -30,8 +30,25 @@ RSpec.describe Race do
     it "can list all the candidates in the race" do
       candidate1 = @race.register_candidate!({name: "Diana D", party: :democrat})
       candidate2 = @race.register_candidate!({name: "Roberto R", party: :republican})
-      
+
       expect(@race.candidates).to eq([candidate1, candidate2])
+    end
+  end
+
+  describe "#open? && #close!" do
+    before(:each) do
+      @presidential = Race.new("Presidential")
+      @ny_governor = Race.new("Governor of New York")
+      @ny_senator = Race.new("New York Senator")
+    end
+
+    it "can determine if a race is open" do
+      expect(@presidential.open?).to be(true)
+    end
+
+    it "can close the race" do
+      @presidential.close!
+      expect(@presidential.open?).to be(false)
     end
   end
 end
