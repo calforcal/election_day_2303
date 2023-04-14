@@ -1,5 +1,6 @@
 require './lib/candidate'
 require './lib/race'
+require './lib/election'
 
 RSpec.describe Race do
   before(:each) do
@@ -37,6 +38,8 @@ RSpec.describe Race do
 
   describe "#open? && #close!" do
     before(:each) do
+      @election = Election.new("2024")
+      @election.add_race(@presidential)
       @presidential = Race.new("Presidential")
       @ny_governor = Race.new("Governor of New York")
       @ny_senator = Race.new("New York Senator")
@@ -49,6 +52,30 @@ RSpec.describe Race do
     it "can close the race" do
       @presidential.close!
       expect(@presidential.open?).to be(false)
+    end
+  end
+
+  describe "#winner" do
+    before(:each) do
+      @election = Election.new("2024")
+      @election.add_race(@presidential)
+      @presidential = Race.new("Presidential")
+      @ny_governor = Race.new("Governor of New York")
+      @ny_senator = Race.new("New York Senator")
+    end
+
+    it "is false if a race is open" do
+      expect(@presidential.open?).to be(true)
+      expect(@presidential.winner).to be(false)
+    end
+
+    it "determines a winner if race is closed" do
+      presidential_candidate_1 = @presidential.register_candidate!({name: "Robert Gunnut", party: :republican})
+      presidential_candidate_2 = @presidential.register_candidate!({name: "Andy Leftwich", party: :democrat})
+      5.times { presidential_candidate_1.vote_for! }
+      101.times { presidential_candidate_2.vote_for! }
+      @presidential.close!
+      expect(@presidential.winner).to eq(presidential_candidate_2)
     end
   end
 end
