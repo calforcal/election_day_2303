@@ -66,7 +66,7 @@ RSpec.describe Election do
       @election.add_race(@ny_governor)
       @election.add_race(@ny_senator)
     end
-    
+
     it "can list each candidate with their vote counts" do
       presidential_candidate_1 = @presidential.register_candidate!({name: "Robert Gunnut", party: :republican})
       presidential_candidate_2 = @presidential.register_candidate!({name: "Andy Leftwich", party: :democrat})
@@ -82,12 +82,12 @@ RSpec.describe Election do
       87.times { ny_senator_candidate_2.vote_for! }
 
       expect(@election.vote_counts).to eq({
-        presidential_candidate_1.name => presidential_candidate_1.votes,
-        presidential_candidate_2.name => presidential_candidate_2.votes,
-        ny_governor_candidate_1.name => ny_governor_candidate_1.votes,
-        ny_governor_candidate_2.name => ny_governor_candidate_2.votes,
-        ny_senator_1.name => ny_senator_1.votes,
-        ny_senator_2.name => ny_senator_2.votes
+        "Robert Gunnut" => 0,
+        "Andy Leftwich" => 101,
+        "Bob Loony" => 2,
+        "Common Sense" => 56,
+        "Joe" => 4,
+        "Michael Callahan" => 87
       })
     end
   end
