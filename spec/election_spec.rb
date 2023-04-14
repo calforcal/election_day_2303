@@ -40,6 +40,9 @@ RSpec.describe Election do
       @presidential = Race.new("Presidential")
       @ny_governor = Race.new("Governor of New York")
       @ny_senator = Race.new("New York Senator")
+      @election.add_race(@presidential)
+      @election.add_race(@ny_governor)
+      @election.add_race(@ny_senator)
     end
 
     it "can list every candidate in the election" do
@@ -55,6 +58,15 @@ RSpec.describe Election do
   end
 
   describe "#vote_counts" do
+    before(:each) do
+      @presidential = Race.new("Presidential")
+      @ny_governor = Race.new("Governor of New York")
+      @ny_senator = Race.new("New York Senator")
+      @election.add_race(@presidential)
+      @election.add_race(@ny_governor)
+      @election.add_race(@ny_senator)
+    end
+    
     it "can list each candidate with their vote counts" do
       presidential_candidate_1 = @presidential.register_candidate!({name: "Robert Gunnut", party: :republican})
       presidential_candidate_2 = @presidential.register_candidate!({name: "Andy Leftwich", party: :democrat})
