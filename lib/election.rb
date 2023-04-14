@@ -14,5 +14,7 @@ class Election
     @races.flat_map { |race| race.candidates.map { |candidate| candidate } }
   end
 
-  
+  def vote_counts
+    candidates.map { |candidate| [candidate.name, candidate.votes] }.to_h
+  end
 end
