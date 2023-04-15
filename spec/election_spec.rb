@@ -91,4 +91,35 @@ RSpec.describe Election do
       })
     end
   end
+
+  describe "#winners" do
+    before(:each) do
+      @presidential = Race.new("Presidential")
+      @ny_governor = Race.new("Governor of New York")
+      @ny_senator = Race.new("New York Senator")
+      @election.add_race(@presidential)
+      @election.add_race(@ny_governor)
+      @election.add_race(@ny_senator)
+    end
+    it "can return an array of winning candidates" do
+      presidential_candidate_1 = @presidential.register_candidate!({name: "Robert Gunnut", party: :republican})
+      presidential_candidate_2 = @presidential.register_candidate!({name: "Andy Leftwich", party: :democrat})
+      ny_governor_candidate_1 = @ny_governor.register_candidate!({name: "Bob Loony", party: :republican})
+      ny_governor_candidate_2 = @ny_governor.register_candidate!({name: "Common Sense", party: :democrat})
+      ny_senator_candidate_1 = @ny_senator.register_candidate!({name: "Joe", party: :republican})
+      ny_senator_candidate_2 = @ny_senator.register_candidate!({name: "Michael Callahan", party: :democrat})
+
+      101.times { presidential_candidate_2.vote_for! }
+      2.times { ny_governor_candidate_1.vote_for! }
+      56.times { ny_governor_candidate_2.vote_for! }
+      87.times { ny_senator_candidate_1.vote_for! }
+      87.times { ny_senator_candidate_2.vote_for! }
+
+      @presidential.close!
+      @ny_governor.close!
+      @ny_senator.close!
+
+      expect(@election.winners).to eq([presidential_candidate_2, ny_governor_candidate_2])
+    end
+  end
 end

@@ -11,10 +11,15 @@ class Election
   end
 
   def candidates
-    @races.flat_map { |race| race.candidates.map { |candidate| candidate } }
+    @races.flat_map { |race| race.candidates }
   end
 
   def vote_counts
     candidates.map { |candidate| [candidate.name, candidate.votes] }.to_h
+  end
+
+  def winners
+    not_ties = @races.select { |race| !race.tie? }
+    not_ties.map { |race| race.winner }
   end
 end

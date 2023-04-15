@@ -22,30 +22,14 @@ class Race
 
   def winner
     return false if open?
-
-    most_votes = 0
-    winner = nil
-    @candidates.each { |candidate| if candidate.votes > most_votes then winner = candidate else end}
-    winner
+    @candidates.max_by { |candidate| candidate.votes }
   end
 
-  # def tie?
-  #   return false if open?
+  def tie?
+    return false if open?
 
-  #   most_votes = 0
-  #   count = 0
-  #   winner = nil
-  #   @candidates.each do |candidate|
-  #     if candidate.votes > most_votes
-  #       winner = candidate
-  #     end
-  #   end
-  #   @candidates.each do |candidate|
-  #     if candidate.votes == most_votes
-  #       count += 1
-  #     end
-  #     count
-  #   end
-  #   if count > 1 then return true else return false end
-  # end
+    count = @candidates.count { |candidate| winner.votes == candidate.votes }
+
+    if count > 1 then return true else return false end
+  end
 end
